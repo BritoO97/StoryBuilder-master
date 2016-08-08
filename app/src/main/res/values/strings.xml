@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">StoryBuilder</string>
+    <string name="next_button">Next</string>
+    <string name="story">Story</string>
+    <string name="credits">10 Story Building is brought to you by New Jersey City University and the Picking Up the Pace Grant "\n" Steve Haber, Project Director "\n" Jamie Rudolph, Project Director "\n" Jennifer Rak, Assistant Project Director  "\n" Christopher Shamburg, App Coordinator and Writer "\n" Tom Lui, Programming Supervisor "\n" Claire Monroe, Faculty Developer"\n" Chloe DeFilippis , Writer"\n" Angelica Roman, Writer"\n" Jonathan Morales, Programmer"\n" Saurabh Rathod, Programmer</string>
+    <string name="startText">The following stories are true. They were taken from cell phone records from a apartment building in northern New Jersey. They are being used for educational purposes only. Please to not attempt to investigate, identify, or contact the people involved. Their names have been changed to protect their privacy. Read the messages on these phones. Solve the phrasal verbs and then solve the dilemmas at the end of each story.</string>
+</resources>

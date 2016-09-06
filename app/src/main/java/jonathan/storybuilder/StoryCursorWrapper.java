@@ -8,6 +8,10 @@ import jonathan.storybuilder.StoryDbSchema.StoryTable;
 /**
  * Created by Joe on 2/29/2016.
  */
+
+/*
+    Gets the data for a complete story from the database using a cursor Wrapper
+ */
 public class StoryCursorWrapper extends CursorWrapper{
 
     public StoryCursorWrapper(Cursor cursor) {

@@ -16,6 +16,16 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+
+        IMPORTANT NOTE:
+            Some of the original code is left in the class, and in other classes as well.
+            Because of changes made this code (mostly a few variables) is never actually used.
+            However to make it easier and quicker to implement the wanted changes cleanup will be done at a later date.
+
+ */
+
+
 public class StoryActivity extends AppCompatActivity {
 
     public static final String TITLE = "title";
@@ -27,6 +37,7 @@ public class StoryActivity extends AppCompatActivity {
     ArrayList<CompleteStory> mList;
     String mTitle;
     List<CompleteStory> mCompleteStoryList;
+    Context context;
 
 
     private ViewPager mViewPager;
@@ -46,6 +57,7 @@ public class StoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+        context = this;
 
         Bundle b = this.getIntent().getExtras();
         mTitle = this.getIntent().getStringExtra(TITLE);
@@ -64,24 +76,40 @@ public class StoryActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.story_view_pager);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+        /*\
+            I think this is where the changes will be made for the data to be read from the db and saved under the
+            established variables.
+         */
 
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {
+
+                // Changes start here
+                DataSourceManager source = DataSourceManager.get(context);
+
+                Story story1 = source.getStory(mTitle);
+                Answer answer1 = source.getAnswers(mTitle);
+                CompleteStory completeStory1 = source.getCompleteStory(mTitle);
+
+                // Changes end here
+
+
                 Story story = mStoryArray.get(position);
                 Answer answer = mAnswerArray.get(position);
                 CompleteStory completeStory = mCompleteStoryList.get(position);
+
                 if (position == 0) {
-                    return StoryFragment.newInstance(story, answer, completeStory);
+                    return StoryFragment.newInstance(story1, answer1, completeStory1);
                 } else if(position > 0) {
                     if (mCompleteStoryList.get(position - 1).getComplete().equals("no")) {
                         InCompleteFragment fragement = new InCompleteFragment();
                         return fragement;
                     } else {
-                        return StoryFragment.newInstance(story, answer, completeStory);
+                        return StoryFragment.newInstance(story1, answer1, completeStory1);
                     }
                 }
-                return StoryFragment.newInstance(story, answer, completeStory);
+                return StoryFragment.newInstance(story1, answer1, completeStory1);
             }
 
             @Override

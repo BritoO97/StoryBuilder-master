@@ -36,27 +36,27 @@ public class MainActivity extends AppCompatActivity {
     CompleteStories mCompleteStories;
     List<CompleteStory> mCompleteStoryList;
     StoryPoints storyPoints;
+    DataSourceManager source;
+    /*
+
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        source = DataSourceManager.get(this);
         mCompleteStories = CompleteStories.get(this);
         mCompleteStoryList = mCompleteStories.getCompleteStories();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         getConnection();
 
         storyPoints = StoryPoints.get(this);
-
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-
     }
 
     @Override
@@ -98,11 +98,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /*
+        Actually gets the connection to the webServer
+     */
     private void getConnection() {
+        /*
+            Add in code to check IF there is a need to make a conection to the network and download the data.
+         */
 
         String siteUrl = "http://10stories.esy.es/story.php";
 
-        if (isNetworkAvailable()) {
+        boolean updateNeeded = source.needUpdate();
+
+        if (updateNeeded && isNetworkAvailable()) {
+
+            Log.i("UPDATE", "The Result of update and network is " + (updateNeeded && isNetworkAvailable()));
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder().url(siteUrl).build();
@@ -120,7 +130,13 @@ public class MainActivity extends AppCompatActivity {
                         if(response.isSuccessful()) {
                             mStories = getStoryInfo(jsonData);
                             mAnswerList = getAnswers(jsonData);
-                            getCompleteStories(jsonData);
+                            CompleteStories s = getCompleteStories(jsonData);
+
+                            Log.i("message", "Add to database statements about to execute");
+                            source.addCompleteData(s);
+                            source.addStoryData(mStories);
+                            source.addLineData(mAnswerList);
+
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -141,6 +157,22 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
+        else
+        {
+            Log.i ("MESSAGE", "The connection was skipped. Grabbing data from database");
+            mStories = source.getAllStories();
+            mAnswerList = source.getAllAnswers();
+            //mCompleteStories = source.getAllCompletedStories();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    updateDisplay();
+
+                }
+            });
+        }
     }
 
     private void updateDisplay() {
@@ -151,6 +183,9 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
     }
 
+    /*
+        Returns whether or not the network is on and avaliable.
+     */
     private boolean isNetworkAvailable() {
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -163,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         return networkOn;
     }
 
+    // tells the user it could not connect to the internet
     private void alertUserAboutError() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Error").setMessage("There was an error while trying to connect to the internet").

@@ -19,10 +19,12 @@ public class AnswerList implements Parcelable {
     public void addAnswers(Answer answers) {
         mAnswers.add(answers);
     }
+    // adds an answer to the arrayList
 
     public int getListSize() {
         return mAnswers.size();
     }
+    // Gets the size of the array, the number of answers. Never Used
 
     public Answer getAnswers(int index) {
 
@@ -30,10 +32,12 @@ public class AnswerList implements Parcelable {
 
         return answers;
     }
+    // gets a specific answer from the array. Never Used
 
     public ArrayList<Answer> getAllAnswers() {
         return  mAnswers;
     }
+    // gets all the answers in the array
 
     @Override
     public int describeContents() {

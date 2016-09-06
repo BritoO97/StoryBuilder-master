@@ -10,6 +10,10 @@ import static jonathan.storybuilder.StoryDbSchema.PointsTable.*;
 /**
  * Created by Joe on 4/4/2016.
  */
+
+/*
+    Gets the data from the db and returns it back to the StoryPoints class
+ */
 public class PointsCursorWrapper extends CursorWrapper {
 
 

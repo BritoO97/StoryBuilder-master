@@ -11,6 +11,11 @@ import jonathan.storybuilder.StoryDbSchema.PointsTable;
 /**
  * Created by Joe on 4/4/2016.
  */
+
+/*
+    Stores the points that the user has won in certain stories
+    Stores in a database and uses a PointCursorWrapper to do so.
+ */
 public class StoryPoints {
 
     private static StoryPoints sStoryPoints;
@@ -32,6 +37,10 @@ public class StoryPoints {
         mDatabase = new PointBaseHelper(mContext).getWritableDatabase();
     }
 
+    /*
+    saves the data to the db using a ContentValues
+     */
+
     public void savePoints(int points) {
         ContentValues values = getContentValues(points);
 
@@ -44,12 +53,19 @@ public class StoryPoints {
         mDatabase.update(PointsTable.NAME, values, null, null);
     }
 
+    /*
+    Gets the point data through a ContentValues class
+     */
+
     public static ContentValues getContentValues(int points){
         ContentValues contentValues = new ContentValues();
         contentValues.put(PointsTable.Cols.POINTS, points);
         return contentValues;
     }
 
+    /*
+    Tells the PointCursorWrapper where to look for the point score in the db
+     */
 
     private PointsCursorWrapper queryPoints(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
@@ -63,6 +79,10 @@ public class StoryPoints {
         );
         return new PointsCursorWrapper(cursor);
     }
+
+    /*
+    Gets the point score from the db using a cursor wrapped in the PointCursorWrapper
+     */
 
     public int getPointScore() {
 
@@ -80,6 +100,10 @@ public class StoryPoints {
         }
         return  mPoints;
     }
+
+    /*
+    Sets and gets the points in the class (not the db)
+     */
 
     public void setPoints(int points) {
         mPoints = points;

@@ -6,6 +6,10 @@ import android.os.Parcelable;
 /**
  * Created by Joe on 2/29/2016.
  */
+
+/*
+    Holds the compketed data for a single story. It includes all the lines, title and the final line + response
+ */
 public class CompleteStory implements Parcelable {
     private String mTitle;
     private String mLine1;
@@ -24,6 +28,10 @@ public class CompleteStory implements Parcelable {
     public CompleteStory() {
 
     }
+
+    /*
+    Setter and getter methods for the various pieces of data in each story
+     */
 
     public CompleteStory(String title) {
         mTitle = title;
@@ -138,6 +146,10 @@ public class CompleteStory implements Parcelable {
         return 0;
     }
 
+    /*
+        Sets the data into a Parcel that can then be used.
+     */
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mTitle);
@@ -154,6 +166,10 @@ public class CompleteStory implements Parcelable {
         dest.writeString(mResponse);
         dest.writeString(mComplete);
     }
+
+    /*
+        Instantiates a complete story based on data in a Parcel
+     */
 
     public CompleteStory(Parcel in) {
         mTitle = in.readString();

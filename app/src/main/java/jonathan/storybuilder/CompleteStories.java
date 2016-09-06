@@ -36,11 +36,19 @@ public class CompleteStories {
         mDatabase = new StoryBaseHelper(mContext).getWritableDatabase();
     }
 
+    /*
+        Saves a CompleteStory to the database using a contentValues to pass the entire data.
+     */
+
     public void saveCompleteStories(CompleteStory c) {
         ContentValues values = getContentValues(c);
 
         mDatabase.insert(StoryTable.NAME, null, values);
     }
+
+    /*
+        Updates a selected story by title with new and correct info.
+     */
 
     public void updateStory(CompleteStory story) {
         String title = story.getTitle();
@@ -48,6 +56,10 @@ public class CompleteStories {
 
         mDatabase.update(StoryTable.NAME, values, StoryTable.Cols.TITLE + " =? ", new String[] { title });
     }
+
+    /*
+        gets the data for a complete story using a contentValues
+     */
 
     public static ContentValues getContentValues(CompleteStory story){
         ContentValues contentValues = new ContentValues();
@@ -67,6 +79,9 @@ public class CompleteStories {
         return contentValues;
     }
 
+    /*
+        Gets a new StoryCursorWrapper.
+     */
 
     private StoryCursorWrapper queryStories(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
@@ -80,6 +95,10 @@ public class CompleteStories {
         );
         return new StoryCursorWrapper(cursor);
     }
+
+    /*
+        Gets a list of all the complete stories in the db using a StoryCursorWrapper
+     */
 
     public List<CompleteStory> getCompleteStories() {
         List<CompleteStory> mCompleteStories = new ArrayList<>();

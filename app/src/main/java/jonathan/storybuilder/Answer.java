@@ -6,7 +6,16 @@ import android.os.Parcelable;
 /**
  * Created by Joe on 2/25/2016.
  */
+
+/*
+    Stores the answers to the questions.
+    For each question it Stores the 3 options, the correct option and the user choice
+ */
 public class Answer implements Parcelable {
+
+    /*
+        String vars to store each piece of data
+     */
 
     private String mAnswer1Choice1;
     private String mAnswer1Choice2;
@@ -57,6 +66,10 @@ public class Answer implements Parcelable {
     public Answer() {
 
     }
+
+    /*
+        Setter and getter methods for each of the choices, correct answers and user interactions.
+     */
 
     public String getAnswer1Choice1() {
         return mAnswer1Choice1;
@@ -473,6 +486,10 @@ public class Answer implements Parcelable {
         dest.writeString(mAnswer9Interaction);
 
     }
+
+    /*
+        Instantiates the class using data from a Parcel
+     */
 
     private Answer(Parcel in) {
         mAnswer1Choice1 = in.readString();

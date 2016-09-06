@@ -22,4 +22,8 @@ public class CreditsActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*
+        When in the credits activity the clickListener will return the user to the main activity/menu
+     */
 }

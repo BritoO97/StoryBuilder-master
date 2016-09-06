@@ -28,10 +28,12 @@ public class Stories implements Parcelable {
     public void addStory(Story story) {
         mStories.add(story);
     }
+    // Adds a story to the array of stories
 
     public int getStorySize() {
         return mStories.size();
     }
+    // retrieves the size of the array, meaning how many stories are present
 
     public Story getStory(int index) {
 
@@ -39,12 +41,17 @@ public class Stories implements Parcelable {
 
         return story;
     }
+    // retrieves a single story from the array based on an index num
 
     public ArrayList<Story> getAllStories() {
         return mStories;
     }
+    // returns all stories in the array
 
 
+    /*
+        Need work to understand parcelable
+     */
     @Override
     public int describeContents() {
         return 0;

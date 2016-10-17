@@ -20,4 +20,5 @@
         android:layout_gravity="center_horizontal"
         android:src="@mipmap/ic_lock"
         android:layout_marginTop="100dp"/>
+
 </LinearLayout>

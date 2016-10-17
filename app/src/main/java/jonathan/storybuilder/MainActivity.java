@@ -78,12 +78,18 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.reset_button:
-                for(int i = 0; i < mStories.getStorySize(); i++) {
+                source.setCompleteStatusAll("no");
+                // Lets see if just this works.
+
+
+                //mCompleteStories = source.get
+                /*for(int i = 0; i < mStories.getStorySize(); i++) {
                     CompleteStory mCompleteStory = mCompleteStoryList.get(i);
-                    mCompleteStory.setComplete("no");
+                    //mCompleteStory.setComplete("no");
+
                     mCompleteStories.updateStory(mCompleteStory);
                     //Toast.makeText(this, mStories.getStorySize() + "", Toast.LENGTH_LONG).show();
-                }
+                }*/
                 storyPoints.savePoints(0);
                 this.invalidateOptionsMenu();
                 return true;

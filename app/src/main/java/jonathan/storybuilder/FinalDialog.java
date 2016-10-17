@@ -5,13 +5,17 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Joe on 2/26/2016.
@@ -26,11 +30,24 @@ public class FinalDialog extends DialogFragment {
     static int points;
     int score;
     StoryPoints mStoryPoints;
+    private static DataSourceManager source;
+    private static ArrayList<CompleteStory> list;
+    private static int storyIndex;
 
-    public static void newInstance(String finalQuestion, CompleteStory completeStory, int score) {
+    public static void newInstance(String finalQuestion, String completeStory, int score, DataSourceManager s, ArrayList<CompleteStory> l) {
+        source = s;
         mFinalQuestion = finalQuestion;
-        mCompleteStory = completeStory;
+        //mCompleteStory = source.getCompleteStory(completeStory);
         points = score;
+        list = l;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getTitle().equals(completeStory))
+            {
+                storyIndex = i;
+                mCompleteStory = list.get(i);
+            }
+        }
+
     }
     @NonNull
     @Override
@@ -44,6 +61,9 @@ public class FinalDialog extends DialogFragment {
             return new AlertDialog.Builder(getActivity()).setTitle("Complete").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    source.setCompleteStatus(mCompleteStory.getTitle(),"yes", "no");
+                    Log.i("Setting complete", mCompleteStory.getTitle() + " is now complete");
+                    list.get(storyIndex).setComplete("yes");
                     mCompleteStory.setComplete("yes");
                     CompleteStories stories = CompleteStories.get(getContext());
                     stories.updateStory(mCompleteStory);
@@ -71,8 +91,12 @@ public class FinalDialog extends DialogFragment {
                             || selectedId == R.id.ravi || selectedId == R.id.ward || selectedId == R.id.maria  ) {
                         mStoryPoints.savePoints(score);
                         mSelected = (RadioButton) view.findViewById(selectedId);
-                        String reponse = mSelected.getText().toString();
-                        mCompleteStory.setResponse(reponse);
+                        String response = mSelected.getText().toString();
+                        mCompleteStory.setResponse(response);
+                        source.setCompleteStatus(mCompleteStory.getTitle(),"yes", response);
+                        Log.i("Setting complete", mCompleteStory.getTitle() + " is now complete");
+                        list.get(storyIndex).setComplete("yes");
+                        list.get(storyIndex).setResponse(response);
                         mCompleteStory.setComplete("yes");
                         CompleteStories stories = CompleteStories.get(getContext());
                         stories.updateStory(mCompleteStory);
@@ -106,8 +130,12 @@ public class FinalDialog extends DialogFragment {
                     if (selectedId == R.id.danny || selectedId == R.id.radioNo) {
                         mStoryPoints.savePoints(score);
                         mSelected = (RadioButton) view.findViewById(selectedId);
-                        String reponse = mSelected.getText().toString();
-                        mCompleteStory.setResponse(reponse);
+                        String response = mSelected.getText().toString();
+                        mCompleteStory.setResponse(response);
+                        source.setCompleteStatus(mCompleteStory.getTitle(),"yes", response);
+                        Log.i("Setting complete", mCompleteStory.getTitle() + " is now complete");
+                        list.get(storyIndex).setComplete("yes");
+                        list.get(storyIndex).setResponse(response);
                         mCompleteStory.setComplete("yes");
                         CompleteStories stories = CompleteStories.get(getContext());
                         stories.updateStory(mCompleteStory);

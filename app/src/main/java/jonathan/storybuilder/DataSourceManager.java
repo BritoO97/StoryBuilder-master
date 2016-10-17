@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,10 @@ public class DataSourceManager
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
     private static DataSourceManager source;
-    private String[] allTitles = {"Story 1:  New Job", "Story 2-- Tommy is Missing ", "Story 3: Wedding Date ",
-            "Story 4: Medical Affair  ", "Story 5 Dangerous Work", "Story 6: Warning to Kristen",
-            "Story 7: Stolen", "Story 8: Parents’ Worries ", "Story 9: Confused about Gay Marriage ",
-            "Story 10: Fear Loves Company ", "Conclusion: Murder", "Who Did It? "};
+    private String[] allTitles = {"Story 1:  New Job", "Story 2-- Tommy is Missing", "Story 3: Wedding Date",
+            "Story 4: Medical Affair", "Story 5 Dangerous Work", "Story 6: Warning to Kristen",
+            "Story 7: Stolen", "Story 8: Parents’ Worries", "Story 9: Confused about Gay Marriage",
+            "Story 10: Fear Loves Company", "Conclusion: Murder", "Who Did It?"};
 
     public static DataSourceManager get(Context context)
     {
@@ -48,10 +49,6 @@ public class DataSourceManager
     {
         dbHelper.close();
     }
-
-    /*
-        I think i need to open the db before adding data to it!!
-     */
 
     public boolean needUpdate()
     {
@@ -90,6 +87,17 @@ public class DataSourceManager
         // Loops through the array
         for (Story s : list)
         {
+            String title = s.getTitle();
+            int len = title.length();
+            Log.i("Clearing end", "Story original title = " + title);
+            while (title.charAt(len-1) == ' ') {
+                title = title.substring(0, len - 1);
+                len = title.length();
+            }
+
+            Log.i("Continued", "final title = \'" + title + "\'");
+            s.setTitle(title);
+
             open();
             // for each story in the array it creates a ContentValues, puts the correct data into it and inserts into the db.
             ContentValues content = new ContentValues();
@@ -122,6 +130,17 @@ public class DataSourceManager
         // Loops through the array
         for (CompleteStory s : list)
         {
+            String title = s.getTitle();
+            int len = title.length();
+            Log.i("Clearing the end", "Complete original title = \'" + title + "\'");
+            while (title.charAt(len-1) == ' ') {
+                title = title.substring(0, len - 1);
+                len = title.length();
+            }
+
+            Log.i("Continued", "final title = " + title);
+            s.setTitle(title);
+
             open();
             // for each completestory in the array it creates a ContentValues, puts the correct data into it and inserts into the db.
             ContentValues content = new ContentValues();
@@ -255,16 +274,16 @@ public class DataSourceManager
     {
         open();
 
-        int row;
-        switch(title)
+
+        /*switch(title)
         {
             case "Story 1:  New Job" :
                 row = 1;
                 break;
-            case "Story 2-- Tommy is Missing " :
+            case "Story 2-- Tommy is Missing" :
                 row = 2;
                 break;
-            case "Story 3: Wedding Date " :
+            case "Story 3: Wedding Date" :
                 row = 3;
                 break;
             case "Story 4: Medical Affair  " :
@@ -297,7 +316,13 @@ public class DataSourceManager
             default:
                 row = 0;
                 break;
-        }
+
+        }*/
+
+        int row = 0;
+        for (int i = 0; i<allTitles.length; i++)
+            if (title.equals(allTitles[i]))
+                row = (i + 1)%13;
 
         Answer s = new Answer();
 
@@ -325,8 +350,10 @@ public class DataSourceManager
     public CompleteStory getCompleteStory(String title)
     {
         open();
+        String args = "\'" + title + "\'";
+        Log.i("Complete Query", "query for a title of " + args);
         Cursor cursor = database.query(MySQLiteHelper.TABLE_COMPLETE,
-                null, MySQLiteHelper.S_COL1 + " = \'" + title + "\'", null, null, null, null);
+                null, MySQLiteHelper.S_COL1 + "=" + args, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
         CompleteStory s = cursorToComplete(cursor);
@@ -334,6 +361,18 @@ public class DataSourceManager
         close();
 
         return s;
+    }
+
+    public ArrayList<CompleteStory> getAllComplete()
+    {
+        ArrayList<CompleteStory> list = new ArrayList<>();
+
+        for(String s : allTitles)
+        {
+            list.add(getCompleteStory(s));
+        }
+
+        return list;
     }
 
     public Answer cursorToAnswer(Answer s, Cursor cursor, int table)
@@ -470,5 +509,61 @@ public class DataSourceManager
         }
 
         return s;
+    }
+
+    public void setCompleteStatus(String name, String completeStatus, String finalResponse)
+    {
+        /*open();
+        database.execSQL("UPDATE " + MySQLiteHelper.TABLE_COMPLETE + " SET " + MySQLiteHelper.S_COL13 +
+                " = \'" + status + "\' WHERE " + MySQLiteHelper.S_COL1 + " = " + name);
+        close();*/
+
+        // new version
+        //open();
+        CompleteStory temp = getCompleteStory(name);
+        //CompleteStory temp2 = new CompleteStory();
+
+        /*
+        temp2.setTitle(temp.getTitle());
+        temp2.setLine1(temp.getLine1());
+        temp2.setLine2(temp.getLine2());
+        temp2.setLine3(temp.getLine3());
+        temp2.setLine4(temp.getLine4());
+        temp2.setLine5(temp.getLine5());
+        temp2.setLine6(temp.getLine6());
+        temp2.setLine7(temp.getLine7());
+        temp2.setLine8(temp.getLine8());
+        temp2.setLine9(temp.getLine9());
+        temp2.setFinalLine(temp.getFinalLine());
+        temp2.setResponse("no");
+        temp2.setComplete("no");*/
+
+        ContentValues cv = new ContentValues();
+        cv.put(MySQLiteHelper.S_COL1, temp.getTitle());
+        cv.put(MySQLiteHelper.S_COL2, temp.getLine1());
+        cv.put(MySQLiteHelper.S_COL3, temp.getLine2());
+        cv.put(MySQLiteHelper.S_COL4, temp.getLine3());
+        cv.put(MySQLiteHelper.S_COL5, temp.getLine4());
+        cv.put(MySQLiteHelper.S_COL6, temp.getLine5());
+        cv.put(MySQLiteHelper.S_COL7, temp.getLine6());
+        cv.put(MySQLiteHelper.S_COL8, temp.getLine7());
+        cv.put(MySQLiteHelper.S_COL9, temp.getLine8());
+        cv.put(MySQLiteHelper.S_COL10, temp.getLine9());
+        cv.put(MySQLiteHelper.S_COL11, temp.getFinalLine());
+        cv.put(MySQLiteHelper.S_COL12, finalResponse);
+        cv.put(MySQLiteHelper.S_COL13, completeStatus);
+
+        name = "\'"+ name + "\'";
+        open();
+        database.update(MySQLiteHelper.TABLE_COMPLETE, cv, "story_title="+name, null);
+        close();
+    }
+
+    public void setCompleteStatusAll(String cStatus)
+    {
+        for(String s : allTitles)
+        {
+            setCompleteStatus(s, cStatus, "no");
+        }
     }
 }

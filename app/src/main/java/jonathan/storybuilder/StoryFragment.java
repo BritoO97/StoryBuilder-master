@@ -44,18 +44,22 @@ public class StoryFragment extends Fragment {
     StoryAdapter mAdapter;
     CompleteStory mComplete;
     protected static boolean canMove = true;
+    private static DataSourceManager source;
+    private static ArrayList<CompleteStory> list;
 
     int num = 0;
     int score;
     StoryPoints mStoryPoints;
 
-    public static StoryFragment newInstance(Story story, Answer answer, CompleteStory completeStory) {
+    public static StoryFragment newInstance(Story story, Answer answer, CompleteStory completeStory, DataSourceManager s, ArrayList<CompleteStory> l) {
         Bundle args = new Bundle();
         args.putParcelable(STORY, story);
         args.putParcelable(ANSWER, answer);
         args.putParcelable(COMPLETE, completeStory);
         StoryFragment fragment = new StoryFragment();
         fragment.setArguments(args);
+        source = s;
+        list = l;
 
         return fragment;
     }
@@ -380,12 +384,17 @@ public class StoryFragment extends Fragment {
                             }
                             holder.itemView.setClickable(true);
                             mFinalDialog = new FinalDialog();
-                            mFinalDialog.newInstance(mStoryPart.get(mStoryPart.size() - 1), mCompleteStory, score);
+                            mFinalDialog.newInstance(mStoryPart.get(mStoryPart.size() - 1), mCompleteStory.getTitle(), score, source, list);
+
+                            /*
+                             * change the mCompleteStory to read from the db using the source.
+                             * check if mStoryPart causes a problem.
+                             */
 
                         }
                         if(holder.getAdapterPosition() == mStoryPart.size()-1) {
                             mFinalDialog = new FinalDialog();
-                            mFinalDialog.newInstance(mStoryPart.get(mStoryPart.size() - 1), mCompleteStory, score);
+                            mFinalDialog.newInstance(mStoryPart.get(mStoryPart.size() - 1), mCompleteStory.getTitle(), score, source, list);
                             mFinalDialog.show(fragmentManager, SHOW);
                         }
 

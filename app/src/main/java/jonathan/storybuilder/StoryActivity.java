@@ -91,6 +91,7 @@ public class StoryActivity extends AppCompatActivity {
                 Story story1 = source.getStory(mTitle);
                 Answer answer1 = source.getAnswers(mTitle);
                 CompleteStory completeStory1 = source.getCompleteStory(mTitle);
+                ArrayList<CompleteStory> list = source.getAllComplete();
 
                 // Changes end here
 
@@ -100,16 +101,16 @@ public class StoryActivity extends AppCompatActivity {
                 CompleteStory completeStory = mCompleteStoryList.get(position);
 
                 if (position == 0) {
-                    return StoryFragment.newInstance(story1, answer1, completeStory1);
+                    return StoryFragment.newInstance(story1, answer1, completeStory1, source, list);
                 } else if(position > 0) {
-                    if (mCompleteStoryList.get(position - 1).getComplete().equals("no")) {
+                    if (list.get(position - 1).getComplete().equals("no")) {
                         InCompleteFragment fragement = new InCompleteFragment();
                         return fragement;
                     } else {
-                        return StoryFragment.newInstance(story1, answer1, completeStory1);
+                        return StoryFragment.newInstance(story1, answer1, completeStory1, source, list);
                     }
                 }
-                return StoryFragment.newInstance(story1, answer1, completeStory1);
+                return StoryFragment.newInstance(story1, answer1, completeStory1, source, list);
             }
 
             @Override

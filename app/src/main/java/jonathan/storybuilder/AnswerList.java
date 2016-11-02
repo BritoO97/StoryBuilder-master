@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-/**
+/*
  * Created by Joe on 2/25/2016.
  */
 public class AnswerList implements Parcelable {

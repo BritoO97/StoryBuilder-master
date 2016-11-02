@@ -15,7 +15,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper
     private static final int DATABASE_VERSION = 1;
 
     /*
-        Handles the table creation for line* tables
+        Handles the table creation for line# tables
      */
     public final static String L_COL1 = "choice1";
     public final static String L_COL2 = "choice2";
@@ -78,10 +78,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper
     //Finished line9 Table
 
     /*
-        All the line* tables creation statements.
-     */
-
-    /*
         Creates the Story and the Complete tables below
      */
 
@@ -114,11 +110,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper
                   S_COL10 + " text, " + S_COL11 + " text" + ");";
 
     //finished the creation of tables complete and story here.
-
-    /*
-            Tables left to create (might not be needed locally)
-                questions   (Useless from the story table)
-     */
 
     public MySQLiteHelper(Context context)
     {
@@ -158,7 +149,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_L9);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMPLETE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY);
-        // is it table create statement or just the table name
 
         onCreate(db);
     }

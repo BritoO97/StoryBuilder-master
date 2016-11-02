@@ -61,9 +61,6 @@ public class DataSourceManager
         if (cursor.getCount() != 0)
         {
             String test = cursor.getString(1);
-            //if (test.equalsIgnoreCase("Beth:  I’m not sure I’ll succeed at this job.  I’ve never been a waitress before."))
-                //result = false;
-
             if (test.indexOf("Beth:") >= 0)
                 result = false;
         }
@@ -274,51 +271,6 @@ public class DataSourceManager
     {
         open();
 
-
-        /*switch(title)
-        {
-            case "Story 1:  New Job" :
-                row = 1;
-                break;
-            case "Story 2-- Tommy is Missing" :
-                row = 2;
-                break;
-            case "Story 3: Wedding Date" :
-                row = 3;
-                break;
-            case "Story 4: Medical Affair  " :
-                row = 4;
-                break;
-            case "Story 5 Dangerous Work" :
-                row = 5;
-                break;
-            case "Story 6: Warning to Kristen" :
-                row = 6;
-                break;
-            case "Story 7: Stolen" :
-                row = 7;
-                break;
-            case "Story 8: Parents’ Worries " :
-                row = 8;
-                break;
-            case "Story 9: Confused about Gay Marriage " :
-                row = 9;
-                break;
-            case "Story 10: Fear Loves Company " :
-                row = 10;
-                break;
-            case "Conclusion: Murder" :
-                row = 11;
-                break;
-            case "Who Did It? " :
-                row = 12;
-                break;
-            default:
-                row = 0;
-                break;
-
-        }*/
-
         int row = 0;
         for (int i = 0; i<allTitles.length; i++)
             if (title.equals(allTitles[i]))
@@ -513,30 +465,7 @@ public class DataSourceManager
 
     public void setCompleteStatus(String name, String completeStatus, String finalResponse)
     {
-        /*open();
-        database.execSQL("UPDATE " + MySQLiteHelper.TABLE_COMPLETE + " SET " + MySQLiteHelper.S_COL13 +
-                " = \'" + status + "\' WHERE " + MySQLiteHelper.S_COL1 + " = " + name);
-        close();*/
-
-        // new version
-        //open();
         CompleteStory temp = getCompleteStory(name);
-        //CompleteStory temp2 = new CompleteStory();
-
-        /*
-        temp2.setTitle(temp.getTitle());
-        temp2.setLine1(temp.getLine1());
-        temp2.setLine2(temp.getLine2());
-        temp2.setLine3(temp.getLine3());
-        temp2.setLine4(temp.getLine4());
-        temp2.setLine5(temp.getLine5());
-        temp2.setLine6(temp.getLine6());
-        temp2.setLine7(temp.getLine7());
-        temp2.setLine8(temp.getLine8());
-        temp2.setLine9(temp.getLine9());
-        temp2.setFinalLine(temp.getFinalLine());
-        temp2.setResponse("no");
-        temp2.setComplete("no");*/
 
         ContentValues cv = new ContentValues();
         cv.put(MySQLiteHelper.S_COL1, temp.getTitle());

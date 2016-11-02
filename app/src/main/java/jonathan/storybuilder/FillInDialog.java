@@ -10,12 +10,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-/**
+/*
  * Created by Joe on 2/26/2016.
  */
 public class FillInDialog extends DialogFragment {
 
-    private static final String ANSWERED = "answered";
+    //private static final String ANSWERED = "answered";
     EditText mAnswer;
     TextView mQuestionLabel;
     public static final String CORRECT = "correct";
@@ -83,9 +83,7 @@ public class FillInDialog extends DialogFragment {
             } else if (chances == 1) {
                 score += 1;
                 mStoryPoints.setPoints(score);
-            } else {
-
-            }
+            } else {}
         }
 
     }

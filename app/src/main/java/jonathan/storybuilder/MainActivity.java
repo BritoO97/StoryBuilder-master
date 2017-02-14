@@ -2,6 +2,7 @@ package jonathan.storybuilder;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -79,17 +80,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.reset_button:
                 source.setCompleteStatusAll("no");
-                // Lets see if just this works.
-
-
-                //mCompleteStories = source.get
-                /*for(int i = 0; i < mStories.getStorySize(); i++) {
-                    CompleteStory mCompleteStory = mCompleteStoryList.get(i);
-                    //mCompleteStory.setComplete("no");
-
-                    mCompleteStories.updateStory(mCompleteStory);
-                    //Toast.makeText(this, mStories.getStorySize() + "", Toast.LENGTH_LONG).show();
-                }*/
                 storyPoints.savePoints(0);
                 this.invalidateOptionsMenu();
                 return true;
@@ -163,12 +153,17 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
+        else if (updateNeeded && !isNetworkAvailable())
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("This application requires an internet connection the first time it is started.").setPositiveButton("Ok", null);
+            builder.show();
+        }
         else
         {
             Log.i ("MESSAGE", "The connection was skipped. Grabbing data from database");
             mStories = source.getAllStories();
             mAnswerList = source.getAllAnswers();
-            //mCompleteStories = source.getAllCompletedStories();
 
             runOnUiThread(new Runnable() {
                 @Override

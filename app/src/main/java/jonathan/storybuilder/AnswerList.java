@@ -21,19 +21,6 @@ public class AnswerList implements Parcelable {
     }
     // adds an answer to the arrayList
 
-    public int getListSize() {
-        return mAnswers.size();
-    }
-    // Gets the size of the array, the number of answers. Never Used
-
-    public Answer getAnswers(int index) {
-
-        Answer answers = mAnswers.get(index);
-
-        return answers;
-    }
-    // gets a specific answer from the array. Never Used
-
     public ArrayList<Answer> getAllAnswers() {
         return  mAnswers;
     }

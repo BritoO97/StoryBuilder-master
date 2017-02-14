@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.io.File;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class DataSourceManager
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
     private static DataSourceManager source;
+    private Context context;
     private String[] allTitles = {"Story 1:  New Job", "Story 2-- Tommy is Missing", "Story 3: Wedding Date",
             "Story 4: Medical Affair", "Story 5 Dangerous Work", "Story 6: Warning to Kristen",
             "Story 7: Stolen", "Story 8: Parents’ Worries", "Story 9: Confused about Gay Marriage",
@@ -37,6 +39,7 @@ public class DataSourceManager
 
     public DataSourceManager(Context context)
     {
+        this.context = context;
         dbHelper = new MySQLiteHelper(context);
     }
 
@@ -52,7 +55,7 @@ public class DataSourceManager
 
     public boolean needUpdate()
     {
-        boolean result = true;
+        /*boolean result = true;
         open();
 
         Cursor cursor = database.query(MySQLiteHelper.TABLE_STORY,
@@ -69,7 +72,13 @@ public class DataSourceManager
         close();
 
         Log.i("UPDATE", "The result of update needed is " + result);
-        return result;
+        return result;*/
+
+        File dbFile = context.getDatabasePath("ten_stories.db");
+        boolean exists = dbFile.exists();
+
+        return !exists;
+
     }
 
     public void addStoryData (Stories stories)

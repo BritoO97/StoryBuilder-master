@@ -36,7 +36,6 @@ public class FinalDialog extends DialogFragment {
     public static void newInstance(String finalQuestion, String completeStory, int score, DataSourceManager s, ArrayList<CompleteStory> l) {
         source = s;
         mFinalQuestion = finalQuestion;
-        //mCompleteStory = source.getCompleteStory(completeStory);
         points = score;
         list = l;
         for (int i = 0; i < list.size(); i++) {

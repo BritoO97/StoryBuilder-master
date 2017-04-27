@@ -1,11 +1,9 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import jonathan.storybuilder.StoryDbSchema.PointsTable;
-
-import static jonathan.storybuilder.StoryDbSchema.PointsTable.*;
+import static jonathan.njcu10stories.StoryDbSchema.PointsTable.*;
 
 /**
  * Created by Joe on 4/4/2016.

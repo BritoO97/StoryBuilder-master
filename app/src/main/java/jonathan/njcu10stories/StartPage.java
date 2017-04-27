@@ -1,4 +1,4 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

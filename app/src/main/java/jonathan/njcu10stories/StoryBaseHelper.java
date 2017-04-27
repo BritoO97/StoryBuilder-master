@@ -1,11 +1,10 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import jonathan.storybuilder.StoryDbSchema.StoryTable;
+import jonathan.njcu10stories.StoryDbSchema.StoryTable;
 
 /**
  * Created by Joe on 2/29/2016.

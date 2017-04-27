@@ -1,4 +1,4 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 /**
  * Created by Joe on 2/25/2016.
@@ -47,6 +44,8 @@ public class StoryFragment extends Fragment {
     private static DataSourceManager source;
     private static ArrayList<CompleteStory> list;
 
+    private static boolean startedAttempt = false;
+
     int num = 0;
     int score;
     StoryPoints mStoryPoints;
@@ -61,6 +60,7 @@ public class StoryFragment extends Fragment {
         source = s;
         list = l;
 
+        startedAttempt = false;
         return fragment;
     }
 
@@ -141,6 +141,7 @@ public class StoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
         mStory = getArguments().getParcelable(STORY);
         mAnswer =  getArguments().getParcelable(ANSWER);
         mComplete = getArguments().getParcelable(COMPLETE);
@@ -149,12 +150,14 @@ public class StoryFragment extends Fragment {
         setStoryLines();
         setComplete();
 
-        if (mComplete.getComplete().equals("no")) {
+        if (!startedAttempt && mComplete.getComplete().equals("no")) {
             AlertDialog alertDialog = new AlertDialog.Builder(getContext()).setTitle("start").
                     setMessage("click on the next button on the top right").
                     setPositiveButton(android.R.string.ok, null).create();
             alertDialog.show();
         }
+
+        startedAttempt = true;
 
 
 
@@ -163,7 +166,6 @@ public class StoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("HERE", "now here");
     }
 
     public static void get() {
@@ -386,10 +388,7 @@ public class StoryFragment extends Fragment {
                             mFinalDialog = new FinalDialog();
                             mFinalDialog.newInstance(mStoryPart.get(mStoryPart.size() - 1), mCompleteStory.getTitle(), score, source, list);
 
-                            /*
-                             * change the mCompleteStory to read from the db using the source.
-                             * check if mStoryPart causes a problem.
-                             */
+
 
                         }
                         if(holder.getAdapterPosition() == mStoryPart.size()-1) {

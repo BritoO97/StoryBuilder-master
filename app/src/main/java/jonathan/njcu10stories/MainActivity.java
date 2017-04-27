@@ -1,8 +1,7 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -10,11 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
     List<CompleteStory> mCompleteStoryList;
     StoryPoints storyPoints;
     DataSourceManager source;
-    /*
-
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,9 +101,6 @@ public class MainActivity extends AppCompatActivity {
         boolean updateNeeded = source.needUpdate();
 
         if (updateNeeded && isNetworkAvailable()) {
-
-            Log.i("UPDATE", "The Result of update and network is " + (updateNeeded && isNetworkAvailable()));
-
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder().url(siteUrl).build();
             Call call = client.newCall(request);
@@ -128,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                             mAnswerList = getAnswers(jsonData);
                             CompleteStories s = getCompleteStories(jsonData);
 
-                            Log.i("message", "Add to database statements about to execute");
                             source.addCompleteData(s);
                             source.addStoryData(mStories);
                             source.addLineData(mAnswerList);
@@ -147,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         } } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
-
+                        e.printStackTrace();
                     }
                 }
             });
@@ -161,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-            Log.i ("MESSAGE", "The connection was skipped. Grabbing data from database");
             mStories = source.getAllStories();
             mAnswerList = source.getAllAnswers();
 

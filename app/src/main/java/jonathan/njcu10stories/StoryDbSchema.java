@@ -1,4 +1,4 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 /**
  * Created by Joe on 2/29/2016.

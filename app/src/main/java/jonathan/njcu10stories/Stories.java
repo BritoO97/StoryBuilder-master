@@ -1,15 +1,9 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-
-import jonathan.storybuilder.StoryDbSchema.StoryTable;
 
 /**
  * Created by Joe on 2/25/2016.

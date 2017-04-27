@@ -1,4 +1,4 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
@@ -60,7 +59,6 @@ public class FinalDialog extends DialogFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     source.setCompleteStatus(mCompleteStory.getTitle(),"yes", "no");
-                    Log.i("Setting complete", mCompleteStory.getTitle() + " is now complete");
                     list.get(storyIndex).setComplete("yes");
                     mCompleteStory.setComplete("yes");
                     CompleteStories stories = CompleteStories.get(getContext());
@@ -92,7 +90,6 @@ public class FinalDialog extends DialogFragment {
                         String response = mSelected.getText().toString();
                         mCompleteStory.setResponse(response);
                         source.setCompleteStatus(mCompleteStory.getTitle(),"yes", response);
-                        Log.i("Setting complete", mCompleteStory.getTitle() + " is now complete");
                         list.get(storyIndex).setComplete("yes");
                         list.get(storyIndex).setResponse(response);
                         mCompleteStory.setComplete("yes");
@@ -131,7 +128,6 @@ public class FinalDialog extends DialogFragment {
                         String response = mSelected.getText().toString();
                         mCompleteStory.setResponse(response);
                         source.setCompleteStatus(mCompleteStory.getTitle(),"yes", response);
-                        Log.i("Setting complete", mCompleteStory.getTitle() + " is now complete");
                         list.get(storyIndex).setComplete("yes");
                         list.get(storyIndex).setResponse(response);
                         mCompleteStory.setComplete("yes");

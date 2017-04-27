@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="jonathan.storybuilder"
+<manifest package="jonathan.njcu10stories"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -12,16 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="jonathan.njcu10stories.MainActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".StoryActivity"
+            android:name="jonathan.njcu10stories.StoryActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".CreditsActivity">
+        <activity android:name="jonathan.njcu10stories.CreditsActivity">
         </activity>
-        <activity android:name=".StartPage">
+        <activity android:name="jonathan.njcu10stories.StartPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

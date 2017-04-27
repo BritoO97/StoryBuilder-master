@@ -1,4 +1,4 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

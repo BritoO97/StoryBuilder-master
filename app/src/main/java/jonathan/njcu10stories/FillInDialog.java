@@ -1,4 +1,4 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -55,8 +55,6 @@ public class FillInDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (correct.trim().toLowerCase().equals(mAnswer.getText().toString().toLowerCase().trim().toString())) {
-
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Correct").setPositiveButton("Ok", null);
                     builder.show();

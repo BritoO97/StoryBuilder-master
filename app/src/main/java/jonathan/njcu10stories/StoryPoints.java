@@ -1,12 +1,11 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import jonathan.storybuilder.StoryDbSchema.PointsTable;
+import jonathan.njcu10stories.StoryDbSchema.PointsTable;
 
 /**
  * Created by Joe on 4/4/2016.
@@ -33,7 +32,6 @@ public class StoryPoints {
 
     public StoryPoints(Context context) {
         mContext = context;
-        Log.e("TAG", "in storipoints ");
         mDatabase = new PointBaseHelper(mContext).getWritableDatabase();
     }
 

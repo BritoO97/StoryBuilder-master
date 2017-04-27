@@ -1,15 +1,12 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.CursorWrapper;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.io.File;
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,25 +52,6 @@ public class DataSourceManager
 
     public boolean needUpdate()
     {
-        /*boolean result = true;
-        open();
-
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_STORY,
-                null, null, null, null, null, null);
-        cursor.moveToFirst();
-        if (cursor.getCount() != 0)
-        {
-            String test = cursor.getString(1);
-            if (test.indexOf("Beth:") >= 0)
-                result = false;
-        }
-        cursor.close();
-
-        close();
-
-        Log.i("UPDATE", "The result of update needed is " + result);
-        return result;*/
-
         File dbFile = context.getDatabasePath("ten_stories.db");
         boolean exists = dbFile.exists();
 
@@ -95,13 +73,11 @@ public class DataSourceManager
         {
             String title = s.getTitle();
             int len = title.length();
-            Log.i("Clearing end", "Story original title = " + title);
             while (title.charAt(len-1) == ' ') {
                 title = title.substring(0, len - 1);
                 len = title.length();
             }
 
-            Log.i("Continued", "final title = \'" + title + "\'");
             s.setTitle(title);
 
             open();
@@ -138,13 +114,11 @@ public class DataSourceManager
         {
             String title = s.getTitle();
             int len = title.length();
-            Log.i("Clearing the end", "Complete original title = \'" + title + "\'");
             while (title.charAt(len-1) == ' ') {
                 title = title.substring(0, len - 1);
                 len = title.length();
             }
 
-            Log.i("Continued", "final title = " + title);
             s.setTitle(title);
 
             open();
@@ -263,14 +237,14 @@ public class DataSourceManager
 
     public Story getStory(String title)
     {
-        Log.i("IMPORTANT", "The title passed as a param is \'" + title + "\'");
         open();
         Cursor cursor = database.query(MySQLiteHelper.TABLE_STORY,
                 null, (MySQLiteHelper.S_COL1 + " = \'" + title + "\'"), null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
         Story s = cursorToStory(cursor);
-        cursor.close();
+        if (cursor != null)
+            cursor.close();
         close();
 
         return s;
@@ -295,11 +269,13 @@ public class DataSourceManager
                 cursor.moveToFirst();
 
             for (int i = 1; i < row; i++) {
-                cursor.moveToNext();
+                if (cursor != null)
+                    cursor.moveToNext();
             }
 
             cursorToAnswer(s, cursor, j);
-            cursor.close();
+            if (cursor != null)
+                cursor.close();
 
         }
 
@@ -312,13 +288,13 @@ public class DataSourceManager
     {
         open();
         String args = "\'" + title + "\'";
-        Log.i("Complete Query", "query for a title of " + args);
         Cursor cursor = database.query(MySQLiteHelper.TABLE_COMPLETE,
                 null, MySQLiteHelper.S_COL1 + "=" + args, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
         CompleteStory s = cursorToComplete(cursor);
-        cursor.close();
+        if (cursor != null)
+            cursor.close();
         close();
 
         return s;
@@ -450,9 +426,8 @@ public class DataSourceManager
     {
         Stories s = new Stories();
 
-        for (int i = 0; i < allTitles.length; i++)
-        {
-            Story temp = getStory(allTitles[i]);
+        for (String allTitle : allTitles) {
+            Story temp = getStory(allTitle);
             s.addStory(temp);
         }
 
@@ -463,9 +438,8 @@ public class DataSourceManager
     {
         AnswerList s = new AnswerList();
 
-        for (int i = 0; i < allTitles.length; i++)
-        {
-            Answer temp = getAnswers(allTitles[i]);
+        for (String allTitle : allTitles) {
+            Answer temp = getAnswers(allTitle);
             s.addAnswers(temp);
         }
 

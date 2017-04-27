@@ -1,13 +1,16 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Joe on 2/25/2016.
+/*
+ * Created by Joe on 2/29/2016.
  */
-public class Story implements Parcelable {
 
+/*
+    Holds the compketed data for a single story. It includes all the lines, title and the final line + response
+ */
+public class CompleteStory implements Parcelable {
     private String mTitle;
     private String mLine1;
     private String mLine2;
@@ -20,12 +23,17 @@ public class Story implements Parcelable {
     private String mLine9;
     private String mFinalLine;
     private String mResponse;
+    private String mComplete;
 
-    public Story() {
+    public CompleteStory() {
 
     }
 
-    public Story(String title) {
+    /*
+    Setter and getter methods for the various pieces of data in each story
+     */
+
+    public CompleteStory(String title) {
         mTitle = title;
     }
 
@@ -125,14 +133,25 @@ public class Story implements Parcelable {
         mResponse = response;
     }
 
+    public String getComplete() {
+        return mComplete;
+    }
+
+    public void setComplete(String complete) {
+        mComplete = complete;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /*
+        Sets the data into a Parcel that can then be used.
+     */
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
         dest.writeString(mTitle);
         dest.writeString(mLine1);
         dest.writeString(mLine2);
@@ -144,10 +163,15 @@ public class Story implements Parcelable {
         dest.writeString(mLine8);
         dest.writeString(mLine9);
         dest.writeString(mFinalLine);
+        dest.writeString(mResponse);
+        dest.writeString(mComplete);
     }
 
-    private Story(Parcel in) {
+    /*
+        Instantiates a complete story based on data in a Parcel
+     */
 
+    public CompleteStory(Parcel in) {
         mTitle = in.readString();
         mLine1 = in.readString();
         mLine2 = in.readString();
@@ -159,17 +183,19 @@ public class Story implements Parcelable {
         mLine8 = in.readString();
         mLine9 = in.readString();
         mFinalLine = in.readString();
+        mResponse = in.readString();
+        mComplete = in.readString();
     }
 
-    public static final Creator<Story> CREATOR = new Creator<Story>() {
+    public static final Creator<CompleteStory> CREATOR = new Creator<CompleteStory>() {
         @Override
-        public Story createFromParcel(Parcel source) {
-            return new Story(source);
+        public CompleteStory createFromParcel(Parcel source) {
+            return new CompleteStory(source);
         }
 
         @Override
-        public Story[] newArray(int size) {
-            return new Story[0];
+        public CompleteStory[] newArray(int size) {
+            return new CompleteStory[0];
         }
     };
 }

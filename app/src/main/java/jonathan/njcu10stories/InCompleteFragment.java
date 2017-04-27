@@ -1,4 +1,4 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

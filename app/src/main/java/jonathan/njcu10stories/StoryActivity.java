@@ -1,4 +1,4 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,23 +8,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 
 import java.util.ArrayList;
 import java.util.List;
-
-/*
-
-        IMPORTANT NOTE:
-            Some of the original code is left in the class, and in other classes as well.
-            Because of changes made this code (mostly a few variables) is never actually used.
-            However to make it easier and quicker to implement the wanted changes cleanup will be done at a later date.
-
- */
-
 
 public class StoryActivity extends AppCompatActivity {
 
@@ -34,7 +21,6 @@ public class StoryActivity extends AppCompatActivity {
     AnswerList mAnswerList;
     ArrayList<Story> mStoryArray;
     ArrayList<Answer> mAnswerArray;
-    ArrayList<CompleteStory> mList;
     String mTitle;
     List<CompleteStory> mCompleteStoryList;
     Context context;
@@ -95,11 +81,6 @@ public class StoryActivity extends AppCompatActivity {
 
                 // Changes end here
 
-
-                Story story = mStoryArray.get(position);
-                Answer answer = mAnswerArray.get(position);
-                CompleteStory completeStory = mCompleteStoryList.get(position);
-
                 if (position == 0) {
                     return StoryFragment.newInstance(story1, answer1, completeStory1, source, list);
                 } else if(position > 0) {
@@ -110,7 +91,9 @@ public class StoryActivity extends AppCompatActivity {
                         return StoryFragment.newInstance(story1, answer1, completeStory1, source, list);
                     }
                 }
-                return StoryFragment.newInstance(story1, answer1, completeStory1, source, list);
+                else {
+                    return StoryFragment.newInstance(story1, answer1, completeStory1, source, list);
+                }
             }
 
             @Override

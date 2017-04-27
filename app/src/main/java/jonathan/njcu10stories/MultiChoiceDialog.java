@@ -1,17 +1,14 @@
-package jonathan.storybuilder;
+package jonathan.njcu10stories;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 /**
  * Created by Joe on 2/26/2016.
@@ -23,7 +20,6 @@ public class MultiChoiceDialog extends DialogFragment {
     private static final String CHOICE_3 = "c3";
     private static final String CHOICE_CORRECT = "c4";
     private static final String ROW = "row";
-    private static final String ANSWERED = "answered";
     RadioButton choice1;
     RadioButton choice2;
     RadioButton choice3;
@@ -141,7 +137,6 @@ public class MultiChoiceDialog extends DialogFragment {
     }
 
     public void updateScore() {
-        Log.d("BOOL", notAnswered + "");
         if (notAnswered) {
             if (chances == 0) {
                 score += 2;
